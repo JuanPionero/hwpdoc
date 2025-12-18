@@ -9,6 +9,6 @@ public class About {
         System.out.println("Copyright for juanlee0@naver.com all rights reserved.");
         System.out.println("=============================================");
         System.out.println("\tversion = " + version);
-        System.out.println("\tcompiled java version = 177");
+        System.out.println("\tcompiled java version = 17");
     }
 }
