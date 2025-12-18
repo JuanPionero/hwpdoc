@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static ext.org.apache.poi.hhwpf.Specification.*;
@@ -207,6 +208,10 @@ public class HHWPFDocument extends POIDocumentLikeForHWP {
     // =============================
     // == Writter
     // =============================
+    public void writeTo(Path filePath) throws Exception {
+        this.writeTo(filePath.toString());
+    }
+
     public void writeTo(String filePath) throws Exception {
         try(OutputStream os = new FileOutputStream(filePath);) {
             this.writeTo(os);
