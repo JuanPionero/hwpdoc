@@ -1,6 +1,7 @@
 package ext.org.apache.poi.hhwpf;
 
 import ext.org.apache.poi.hhwpf.model.DocInfo;
+import ext.org.apache.poi.hhwpf.model.FileHeader;
 import ext.org.apache.poi.hhwpf.model.storage.BodyText;
 import ext.org.apache.poi.hhwpf.util.factory.HHWPDocumentFactory;
 import ext.org.apache.poi.hpsf.HwpSummaryInformation;
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static ext.org.apache.poi.hhwpf.Specification.DEFAULT_FILE_VERSION_LONG;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HHWPFDocumentTest {
@@ -39,6 +41,14 @@ class HHWPFDocumentTest {
             } catch (IOException e) {
             }
         }
+    }
+
+    @Test
+    void getFileHeader() {
+        final FileHeader fileHeader = hwpDoc.getFileHeader();
+        assertNotNull(fileHeader, "Blank HWP Doc must have its File Header block");
+        assertTrue(DEFAULT_FILE_VERSION_LONG <= fileHeader.getFileVersion().getVersion(),
+                "Blank HWP Doc's File version must grater or equal to " + DEFAULT_FILE_VERSION_LONG);
     }
 
     @Test
