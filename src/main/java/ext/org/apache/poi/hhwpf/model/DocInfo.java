@@ -5,9 +5,6 @@ import ext.org.apache.poi.hhwpf.Initializer;
 import ext.org.apache.poi.hhwpf.StreamReader;
 import ext.org.apache.poi.hhwpf.StreamWriter;
 import ext.org.apache.poi.hhwpf.model.datarecord.*;
-import ext.org.apache.poi.hhwpf.model.datarecord.borderfill.fillinfo.FillInfo;
-import ext.org.apache.poi.hhwpf.model.datarecord.borderfill.fillinfo.FillType;
-import ext.org.apache.poi.hhwpf.model.datarecord.borderfill.fillinfo.PatternFill;
 import ext.org.apache.poi.hhwpf.model.datarecord.compatibledocument.CompatibleDocumentSort;
 import ext.org.apache.poi.hhwpf.model.etc.UnknownRecord;
 
@@ -17,9 +14,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 
 import static ext.org.apache.poi.hhwpf.model.datarecord.TagID.*;
 
