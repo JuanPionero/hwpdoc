@@ -1,9 +1,14 @@
 plugins {
-    id 'java'
-    id 'maven-publish'
+    // id 'java' // : for standalone application
+    id 'java-library' // https://docs.gradle.org/current/userguide/publishing_setup.html#sec:basic_publishing
+//    id 'maven-publish'  // https://docs.gradle.org/current/userguide/publishing_maven.html#publishing_maven:usage
+//    id 'signing'  // for GPG signing
+    // 위 두 줄 대신 사용할 수 있음. wrapper 정로 생각하면 됨.
+    id "com.vanniktech.maven.publish" version "0.35.0"
+
 }
 
-group = 'com.agadasom'
+group = 'kr.stocklab'
 version = '0.0.1'
 
 // java 17와의 호환성을 보장하기 위해 사용
@@ -12,7 +17,6 @@ java {
         languageVersion = JavaLanguageVersion.of(17) // Enforces Java 17
     }
 }
-
 
 repositories {
     mavenCentral()
@@ -32,47 +36,60 @@ test {
     useJUnitPlatform()
 }
 
-tasks.withType(Jar).configureEach {
-    from(rootDir) {
-        include 'license.txt'
-        into 'META-INF' // JAR 파일 내 META-INF 디렉터리에 포함
-    }
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+    // You might also need to set the charset and docencoding
+//    options.charset = 'UTF-8'
+//    options.docencoding = 'UTF-8'
+    failOnError false
+    options.addStringOption 'Xdoclint:none', '-quiet'
+    options.addBooleanOption 'html5', true
+    // html5 이전 방식의 tag 존재해서임.
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
 
-            pom {
-                name = 'hwpdoc' // 프로젝트 이름
-                description = 'Hancom 에서 개발한 HWP 포맷 파일에 접근할 수 있는 방법을 제공하는 라이브러리' // 프로젝트 설명
-                url = 'github.com/juanPionero/hwpdoc' // 프로젝트 URL (소스 코드 위치 등)
+    pom {
+        name = 'hwpdoc' // 프로젝트 이름
+        description = 'A library to handle HWP, the legacy file format used by Hangul Word Processor of Hancom INC., ' +
+                ': read and write in JAVA (>= 17)' // 프로젝트 설명
+        inceptionYear = '2026'
+        url = 'https://github.com/juanPionero/hwpdoc' // 프로젝트 URL (소스 코드 위치 등)
 
-                // 라이선스 정보 등록
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0' // 라이선스 이름
-                        url = 'www.apache.org' // 라이선스 URL
-                    }
-                }
-
-                // 개발자(제작자) 정보 등록
-                developers {
-                    developer {
-                        id = 'juanPionero' // 개발자 ID (사용자 이름)
-                        name = 'Seung Hoon Lee' // 개발자 실명
-                        email = 'juanlee0@naver.com' // 개발자 이메일
-                    }
-                }
-
-                // SCM(소스 관리) 정보 등록
-                scm {
-                    connection = 'scm:git:git://github.com/juanPionero/hwpdoc.git'
-                    developerConnection = 'scm:git:ssh://github.com/juanPionero/hwpdoc.git'
-                    url = 'github.com/juanPionero/hwpdoc'
-                }
+        // 라이선스 정보 등록
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
             }
         }
+
+        // 개발자(제작자) 정보 등록
+        developers {
+            developer {
+                id = 'juanPionero' // 개발자 ID (사용자 이름)
+                name = 'Seung Hoon Lee' // 개발자 실명
+                email = 'juanlee0@naver.com' // 개발자 이메일
+                url = 'https://github.com/juanPionero/'
+            }
+        }
+
+        // SCM(소스 관리) 정보 등록
+        scm {
+            url = 'https://github.com/juanPionero/hwpdoc'
+            connection = 'scm:git:git://github.com/juanPionero/hwpdoc.git'
+            developerConnection = 'scm:git:ssh://git@github.com/juanPionero/hwpdoc.git'
+        }
     }
+
 }
+
