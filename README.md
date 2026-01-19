@@ -34,7 +34,9 @@
 
 ## 이슈
 ### 2025.12.25
-- GitHub에 첫 공개 
+- GitHub에 첫 공개 : [hwpdoc] 
+### 2026.01.17
+- Maven Central Respository에 첫 공개 : [maven-hwpdoc]
 
 ## References  
 - hwplib 원작자:[박성균](https://github.com/neolord0)
@@ -42,3 +44,5 @@
 [neolord0]: https://github.com/neolord0
 [hwplib]:  https://github.com/neolord0/hwplib
 [hwpxlib]:  https://github.com/neolord0/hwpxlib 
+[hwpdoc]: https://github.com/JuanPionero/hwpdoc
+[maven-hwpdoc]: https://mvnrepository.com/artifact/kr.stocklab/hwpdoc
